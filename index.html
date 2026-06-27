@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unilever Distribution Intelligence — Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ink:     '#1A1A1A',
+            muted:   '#5C5C5C',
+            faint:   '#9A9A9A',
+            warm:    '#EEECEA',
+            surface: '#F6F5F2',
+            border:  'rgba(0,0,0,0.10)',
+            mcblue:  '#1A6FBF',
+            teal:    '#0F6E56',
+            purple:  '#534AB7',
+            amber:   '#854F0B',
+            coral:   '#993C1D',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #EEECEA; color: #1A1A1A; font-family: 'Inter', sans-serif; }
+
+    /* ── Progress bar ── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: #1A6FBF; width: 0%; z-index: 100;
+      transition: width 0.1s linear;
+    }
+
+    /* ── Nav ── */
+    .nav-wrap {
+      position: sticky; top: 0; z-index: 90;
+      background: rgba(238,236,234,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 0.5px solid rgba(0,0,0,0.10);
+    }
+
+    /* ── Typography ── */
+    .serif { font-family: 'Playfair Display', Georgia, serif; }
+    .exhibit-label {
+      font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase;
+      color: #5C5C5C; font-weight: 500; display: block; margin-bottom: 0.6rem;
+    }
+    .exhibit-rule {
+      border: none; border-top: 1px solid rgba(0,0,0,0.15);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Section layout ── */
+    .mckinsey-section {
+      display: grid; grid-template-columns: 5fr 7fr; gap: 4rem;
+      padding: 5rem 0; border-top: 0.5px solid rgba(0,0,0,0.10);
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .mckinsey-section { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 0; }
+    }
+
+    /* ── Left panel ── */
+    .left-panel .section-num {
+      font-family: 'Playfair Display', serif; font-size: 14px;
+      font-weight: 700; color: #9A9A9A; margin-bottom: 0.5rem;
+    }
+    .left-panel h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 800; line-height: 1.25; margin-bottom: 1rem; color: #1A1A1A;
+    }
+    .left-panel p {
+      font-size: 14px; line-height: 1.75; color: #5C5C5C;
+    }
+
+    /* ── Cards ── */
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    @media (max-width: 900px) { .card-grid { grid-template-columns: 1fr; } }
+    .gap-card {
+      background: #F6F5F2; border: 0.5px solid rgba(0,0,0,0.10);
+      border-radius: 6px; padding: 1.25rem;
+    }
+    .gap-card h3 { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+    .gap-card p { font-size: 12px; color: #5C5C5C; line-height: 1.65; margin: 0; }
+
+    /* ── Metric grid ── */
+    .metric-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(0,0,0,0.10); border: 0.5px solid rgba(0,0,0,0.10); border-radius: 6px; overflow: hidden; }
+    @media (max-width: 700px) { .metric-row { grid-template-columns: 1fr 1fr; } }
+    .metric-cell { background: #F6F5F2; padding: 1.25rem 1rem; }
+    .metric-cell .val { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+    .metric-cell .lbl { font-size: 11px; color: #5C5C5C; line-height: 1.5; }
+
+    /* ── Timeline ── */
+    .tl { display: flex; flex-direction: column; gap: 0; }
+    .tl-row { display: flex; gap: 1rem; padding-bottom: 1.5rem; position: relative; }
+    .tl-row:last-child { padding-bottom: 0; }
+    .tl-spine { display: flex; flex-direction: column; align-items: center; min-width: 18px; }
+    .tl-dot { width: 8px; height: 8px; border-radius: 50%; background: #1A1A1A; flex-shrink: 0; margin-top: 5px; }
+    .tl-line { width: 1px; background: rgba(0,0,0,0.15); flex: 1; margin-top: 4px; }
+    .tl-row:last-child .tl-line { display: none; }
+    .tl-body h3 { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+    .tl-body p { font-size: 12px; color: #5C5C5C; line-height: 1.65; margin: 0; }
+
+    /* ── Objections ── */
+    .objection-list { display: flex; flex-direction: column; gap: 8px; }
+    .obj-item { display: flex; align-items: flex-start; gap: 10px; padding: 0.8rem 1rem; background: #F6F5F2; border: 0.5px solid rgba(0,0,0,0.10); border-radius: 6px; }
+    .obj-mark { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 800; color: #CFCCC8; line-height: 1; flex-shrink: 0; }
+    .obj-item p { font-size: 13px; color: #3C3C3C; line-height: 1.55; margin: 0; padding-top: 4px; font-style: italic; }
+
+    /* ── Pull quote ── */
+    .pullquote { border-left: 2px solid #1A6FBF; padding: 0.6rem 1.1rem; margin: 1.2rem 0; }
+    .pullquote p { font-size: 15px; color: #1A1A1A; line-height: 1.65; margin: 0; font-style: italic; }
+
+    /* ── Impact grid ── */
+    .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 600px) { .impact-grid { grid-template-columns: 1fr; } }
+    .impact-cell { background: #F6F5F2; border: 0.5px solid rgba(0,0,0,0.10); border-radius: 6px; padding: 1.1rem; }
+    .impact-tag { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #9A9A9A; font-weight: 500; margin-bottom: 6px; }
+    .impact-cell p { font-size: 12px; color: #5C5C5C; line-height: 1.65; margin: 0; }
+
+    /* ── Analysis comparison ── */
+    .analysis-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .compare-col { border: 0.5px solid rgba(0,0,0,0.10); border-radius: 6px; overflow: hidden; }
+    .compare-header { padding: 0.6rem 1rem; font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+    .compare-header.reporting { background: #E8E6E2; color: #5C5C5C; }
+    .compare-header.analysis { background: #1A6FBF; color: white; }
+    .compare-body { padding: 1rem; background: #F6F5F2; }
+    .compare-body p { font-size: 12px; color: #5C5C5C; line-height: 1.65; margin: 0 0 8px; }
+    .compare-body p:last-child { margin: 0; }
+    .compare-body .q { font-size: 12px; color: #1A1A1A; font-weight: 500; margin-bottom: 4px; }
+
+    /* ── Closing ── */
+    .closing-wrap { background: #1A1A1A; border-radius: 8px; padding: 3rem; margin: 4rem 0 2rem; }
+    .closing-wrap h2 { font-family: 'Playfair Display', serif; font-size: clamp(22px, 2.8vw, 34px); font-weight: 800; color: white; line-height: 1.25; margin-bottom: 1rem; }
+    .closing-wrap p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.8; max-width: 600px; }
+    .closing-wrap p + p { margin-top: 0.75rem; }
+
+    /* ── Scroll reveal — progressive enhancement only ── */
+    html.js-ready .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    html.js-ready .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Hero ── */
+    .hero-wrap {
+      min-height: 88vh; display: flex; flex-direction: column; justify-content: flex-end;
+      padding-bottom: 4rem;
+    }
+    .hero-meta { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .meta-tag {
+      font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 4px 10px; border: 0.5px solid rgba(0,0,0,0.2); border-radius: 3px;
+      color: #5C5C5C; font-weight: 500;
+    }
+    .hero-wrap h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 60px);
+      font-weight: 800; line-height: 1.12;
+      max-width: 820px; margin-bottom: 1.5rem;
+    }
+    .hero-wrap .sub {
+      font-size: 15px; color: #5C5C5C; line-height: 1.7; max-width: 560px;
+    }
+
+    /* ── Exhibit box ── */
+    .exhibit-box { background: #F6F5F2; border: 0.5px solid rgba(0,0,0,0.10); border-radius: 6px; padding: 1.5rem; }
+  </style>
+</head>
+
+<body>
+
+  <!-- Progress bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Nav -->
+  <nav class="nav-wrap">
+    <div class="max-w-6xl mx-auto px-8 py-3 flex items-center justify-between">
+      <span class="text-xs tracking-widest uppercase text-muted font-medium">Distribution Intelligence Platform</span>
+      <div class="flex items-center gap-5">
+        <span class="text-xs text-faint hidden sm:block">Unilever · Apr 2024 – May 2025</span>
+        <a href="#contact" class="text-xs font-medium border border-mcblue text-mcblue px-3 py-1.5 rounded-sm hover:bg-mcblue hover:text-white transition-colors duration-200">
+          Contact ↗
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto px-8">
+
+    <!-- ── Hero ── -->
+    <div class="hero-wrap">
+      <div class="hero-meta reveal">
+        <span class="meta-tag">Unilever</span>
+        <span class="meta-tag">Distribution</span>
+        <span class="meta-tag">Analytics Lead</span>
+        <span class="meta-tag">Apr 2024 – May 2025</span>
+      </div>
+      <h1 class="reveal reveal-delay-1">
+        From spreadsheets<br>to strategy.
+      </h1>
+      <p class="sub reveal reveal-delay-2">
+        How one analyst rebuilt the way Unilever's Distribution team makes decisions —
+        replacing €60,000 in outsourced BI and changing the data culture of an
+        entire sales organization over 13 months.
+      </p>
+    </div>
+
+    <!-- ── Metrics ── -->
+    <section class="pb-16 border-t border-border pt-10">
+      <span class="exhibit-label reveal">At a glance</span>
+      <div class="metric-row reveal reveal-delay-1">
+        <div class="metric-cell">
+          <div class="val" style="color:#0F6E56;">€60K</div>
+          <div class="lbl">Annual outsourced BI spend replaced by internal capability</div>
+        </div>
+        <div class="metric-cell">
+          <div class="val" style="color:#534AB7;">12</div>
+          <div class="lbl">Operational dashboards delivered across regions and themes</div>
+        </div>
+        <div class="metric-cell">
+          <div class="val" style="color:#854F0B;">99.9%</div>
+          <div class="lbl">Target reporting accuracy validated against manual sources</div>
+        </div>
+        <div class="metric-cell">
+          <div class="val" style="color:#993C1D;">13mo</div>
+          <div class="lbl">From intern project to primary organizational responsibility</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 1. Problem ── -->
+    <section class="mckinsey-section" id="problem">
+      <div class="left-panel reveal">
+        <div class="section-num">1.</div>
+        <h2>The real problem wasn't reporting. It was decision-making.</h2>
+        <p>
+          Unilever's Distribution team ran on Excel files, manual calculations, and periodic
+          report cycles. Getting a straight answer to a business question required hours of
+          gathering, cross-checking, and reconciling data — before any analysis could begin.
+        </p>
+        <p style="margin-top:0.75rem;">
+          An external vendor had been engaged to solve this. Annual spend: approximately
+          €60,000. Return on investment: low.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <span class="exhibit-label">Exhibit 1</span>
+        <hr class="exhibit-rule" />
+        <p style="font-size:13px; font-weight:500; margin-bottom:1.25rem; line-height:1.4;">
+          The old decision-making loop — and where it broke down.
+        </p>
+        <div class="exhibit-box">
+
+          <!-- Simple flow diagram -->
+          <svg viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#9A9A9A"/>
+              </marker>
+              <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#993C1D"/>
+              </marker>
+            </defs>
+            <!-- Nodes -->
+            <rect x="10"  y="75" width="80" height="36" rx="4" fill="#E8E6E2" stroke="rgba(0,0,0,0.12)" stroke-width="0.5"/>
+            <rect x="130" y="75" width="80" height="36" rx="4" fill="#E8E6E2" stroke="rgba(0,0,0,0.12)" stroke-width="0.5"/>
+            <rect x="250" y="75" width="80" height="36" rx="4" fill="#E8E6E2" stroke="rgba(0,0,0,0.12)" stroke-width="0.5"/>
+            <rect x="370" y="75" width="80" height="36" rx="4" fill="#FAEEDA" stroke="rgba(133,79,11,0.3)" stroke-width="0.5"/>
+            <!-- Block -->
+            <rect x="248" y="128" width="84" height="28" rx="4" fill="#FCEBEB" stroke="rgba(163,45,45,0.3)" stroke-width="0.5"/>
+            <!-- Labels -->
+            <text x="50"  y="97" text-anchor="middle" font-size="10" fill="#3C3C3C" font-family="Inter,sans-serif">Raw data</text>
+            <text x="170" y="91" text-anchor="middle" font-size="10" fill="#3C3C3C" font-family="Inter,sans-serif">Manual</text>
+            <text x="170" y="103" text-anchor="middle" font-size="10" fill="#3C3C3C" font-family="Inter,sans-serif">Excel</text>
+            <text x="290" y="91" text-anchor="middle" font-size="10" fill="#3C3C3C" font-family="Inter,sans-serif">Cross-</text>
+            <text x="290" y="103" text-anchor="middle" font-size="10" fill="#3C3C3C" font-family="Inter,sans-serif">checking</text>
+            <text x="410" y="91" text-anchor="middle" font-size="10" fill="#854F0B" font-family="Inter,sans-serif">Decision</text>
+            <text x="410" y="103" text-anchor="middle" font-size="10" fill="#854F0B" font-family="Inter,sans-serif">made</text>
+            <text x="290" y="147" text-anchor="middle" font-size="10" fill="#A32D2D" font-family="Inter,sans-serif">Errors found</text>
+            <text x="290" y="159" text-anchor="middle" font-size="10" fill="#A32D2D" font-family="Inter,sans-serif">→ restart</text>
+            <!-- Arrows -->
+            <line x1="90"  y1="93" x2="128" y2="93" stroke="#9A9A9A" stroke-width="1" marker-end="url(#arr)"/>
+            <line x1="210" y1="93" x2="248" y2="93" stroke="#9A9A9A" stroke-width="1" marker-end="url(#arr)"/>
+            <line x1="330" y1="93" x2="368" y2="93" stroke="#9A9A9A" stroke-width="1" marker-end="url(#arr)"/>
+            <!-- Loop back arrow -->
+            <path d="M292 111 L292 128" stroke="#A32D2D" stroke-width="1" fill="none" marker-end="url(#arr-red)"/>
+            <path d="M248 142 Q170 160 170 111" stroke="#A32D2D" stroke-width="1" fill="none" stroke-dasharray="3,2" marker-end="url(#arr-red)"/>
+            <!-- Time label -->
+            <text x="260" y="18" text-anchor="middle" font-size="11" fill="#993C1D" font-family="Inter,sans-serif" font-weight="500">Hours to days per question</text>
+            <line x1="90" y1="22" x2="430" y2="22" stroke="#993C1D" stroke-width="0.75" stroke-dasharray="3,2"/>
+            <line x1="90" y1="18" x2="90" y2="26" stroke="#993C1D" stroke-width="0.75"/>
+            <line x1="430" y1="18" x2="430" y2="26" stroke="#993C1D" stroke-width="0.75"/>
+          </svg>
+
+          <div class="pullquote" style="margin-top:1rem; margin-bottom:0;">
+            <p>"By the time it reached decision-makers, the opportunity had already passed."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Diagnosis ── -->
+    <section class="mckinsey-section" id="diagnosis">
+      <div class="left-panel reveal">
+        <div class="section-num">2.</div>
+        <h2>Three problems hiding inside one problem.</h2>
+        <p>
+          The vendor's low ROI wasn't a technology failure. It was three compounding
+          organizational failures — each masking the others.
+        </p>
+        <p style="margin-top:0.75rem;">
+          Addressing only one would have left the others intact. All three required
+          a coordinated response.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <span class="exhibit-label">Exhibit 2</span>
+        <hr class="exhibit-rule" />
+        <p style="font-size:13px; font-weight:500; margin-bottom:1.25rem; line-height:1.4;">
+          Three compounding gaps in the outsourced BI model.
+        </p>
+        <div class="card-grid">
+          <div class="gap-card">
+            <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:#9A9A9A;font-weight:500;margin-bottom:6px;">Communication</div>
+            <h3>Requirements lost in translation</h3>
+            <p>Business users couldn't speak in technical requirements. Technical teams couldn't speak in distribution logic. Every change request degraded in transit.</p>
+          </div>
+          <div class="gap-card">
+            <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:#9A9A9A;font-weight:500;margin-bottom:6px;">Comprehension</div>
+            <h3>Dashboards without domain knowledge</h3>
+            <p>Promotional structures, regional hierarchies, category nuances — these take months to learn. The vendor never had that time.</p>
+          </div>
+          <div class="gap-card">
+            <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:#9A9A9A;font-weight:500;margin-bottom:6px;">Trust</div>
+            <h3>Adoption blocked by unverifiable outputs</h3>
+            <p>Even when reports existed, no one could audit them. Excel remained the default because it was controllable. The platform wasn't used.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Approach ── -->
+    <section class="mckinsey-section" id="approach">
+      <div class="left-panel reveal">
+        <div class="section-num">3.</div>
+        <h2>The mandate was analytics. The real job was trust.</h2>
+        <p>
+          The strategy wasn't to build better dashboards.
+          It was to earn the right to replace the old ones.
+        </p>
+        <p style="margin-top:0.75rem;">
+          That required sequencing the work carefully — listening before building,
+          validating before launching, and treating the rollout as a change management
+          event rather than a software release.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <span class="exhibit-label">Exhibit 3</span>
+        <hr class="exhibit-rule" />
+        <p style="font-size:13px; font-weight:500; margin-bottom:1.25rem; line-height:1.4;">
+          Three-phase approach to platform delivery and adoption.
+        </p>
+        <div class="exhibit-box">
+          <div class="tl">
+            <div class="tl-row">
+              <div class="tl-spine"><div class="tl-dot" style="background:#1A6FBF;"></div><div class="tl-line"></div></div>
+              <div class="tl-body">
+                <h3>Phase 1 — Listen before you build</h3>
+                <p>The first step was not opening a data tool. It was sitting with sales managers, regional leads, and distribution heads to understand not what they reported, but what decisions they were actually trying to make. The gap between the two was significant.</p>
+              </div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-spine"><div class="tl-dot" style="background:#1A6FBF;"></div><div class="tl-line"></div></div>
+              <div class="tl-body">
+                <h3>Phase 2 — Build with validation at the center</h3>
+                <p>Every metric was validated against existing manual reports before going live. A 99.9% accuracy target was set as the standard. Discrepancies — from promotional configurations, unit conversions, or transaction anomalies — were documented and escalated, never hidden.</p>
+              </div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-spine"><div class="tl-dot" style="background:#1A6FBF;"></div></div>
+              <div class="tl-body">
+                <h3>Phase 3 — Launch as a change management event</h3>
+                <p>Technology was the easy part. Changing behavior was the hard part. Launch was structured as a conference — workshops, hands-on sessions, interactive breakouts. Not demos. The goal was for skeptical users to experience efficiency gains themselves.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Resistance ── -->
+    <section class="mckinsey-section" id="resistance">
+      <div class="left-panel reveal">
+        <div class="section-num">4.</div>
+        <h2>The most capable solution can fail if nobody opens it.</h2>
+        <p>
+          Seasoned sales managers and regional leads had spent years building expertise
+          in Excel. The dashboards weren't just a tool change — they were a challenge
+          to what those users had mastered.
+        </p>
+        <p style="margin-top:0.75rem;">
+          The turning point wasn't a feature. It was the moment a skeptical regional
+          manager found an insight he couldn't have found in Excel — and acted on it
+          before his peers knew the question had even been asked.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <span class="exhibit-label">Exhibit 4</span>
+        <hr class="exhibit-rule" />
+        <p style="font-size:13px; font-weight:500; margin-bottom:1.25rem; line-height:1.4;">
+          Common user objections and the organizational response.
+        </p>
+        <div class="objection-list">
+          <div class="obj-item">
+            <div class="obj-mark">"</div>
+            <p>Can I trust these numbers?</p>
+          </div>
+          <div class="obj-item">
+            <div class="obj-mark">"</div>
+            <p>My Excel shows something different.</p>
+          </div>
+          <div class="obj-item">
+            <div class="obj-mark">"</div>
+            <p>How do I know this data is current?</p>
+          </div>
+          <div class="obj-item">
+            <div class="obj-mark">"</div>
+            <p>Why would I change what already works?</p>
+          </div>
+        </div>
+        <p style="font-size:12px;color:#5C5C5C;line-height:1.65;margin-top:1rem;">
+          These weren't irrational. They were the right questions. The project's job
+          was to answer each one, concretely, one user at a time — through validation
+          documentation, live data comparisons, and direct hands-on enablement sessions.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 5. Analysis ── -->
+    <section class="mckinsey-section" id="analysis">
+      <div class="left-panel reveal">
+        <div class="section-num">5.</div>
+        <h2>Dashboards answered "what." Analysis answered "why."</h2>
+        <p>
+          Beyond operational reporting, a separate layer of market intelligence
+          analysis was conducted using Nielsen data to answer harder questions
+          about brand performance, category trends, and promotional effectiveness.
+        </p>
+        <p style="margin-top:0.75rem;">
+          The goal was always to produce a recommendation — not just a report.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <span class="exhibit-label">Exhibit 5</span>
+        <hr class="exhibit-rule" />
+        <p style="font-size:13px; font-weight:500; margin-bottom:1.25rem; line-height:1.4;">
+          Analytical approach applied to a Dove shampoo promotional evaluation.
+        </p>
+        <div class="analysis-compare">
+          <div class="compare-col">
+            <div class="compare-header reporting">Reporting mode</div>
+            <div class="compare-body">
+              <p class="q">What happened?</p>
+              <p>Dove shampoo sales volume increased 8% during the promotional period.</p>
+              <p style="margin-top:8px;padding-top:8px;border-top:0.5px solid rgba(0,0,0,0.08);">
+                ↳ Output: a number. No context. No action.
+              </p>
+            </div>
+          </div>
+          <div class="compare-col">
+            <div class="compare-header analysis">Analysis mode</div>
+            <div class="compare-body">
+              <p class="q">What happened — and what should we do?</p>
+              <p>Dove +8% vs. historical baseline +3%, category growth +11%, primary competitor +15%.</p>
+              <p style="color:#3C3C3C;font-weight:500;margin-top:8px;padding-top:8px;border-top:0.5px solid rgba(0,0,0,0.08);">
+                ↳ Promotion underperformed vs. category. Investigate distribution gaps before next cycle.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Impact ── -->
+    <section class="mckinsey-section" id="impact">
+      <div class="left-panel reveal">
+        <div class="section-num">6.</div>
+        <h2>Twelve dashboards. One cultural shift.</h2>
+        <p>
+          The quantitative outcomes tell part of the story. But the number that
+          matters most doesn't appear in any dashboard: the number of managers
+          who stopped opening Excel.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <span class="exhibit-label">Exhibit 6</span>
+        <hr class="exhibit-rule" />
+        <p style="font-size:13px; font-weight:500; margin-bottom:1.25rem; line-height:1.4;">
+          Impact summary across four dimensions.
+        </p>
+        <div class="impact-grid">
+          <div class="impact-cell">
+            <div class="impact-tag">Direct</div>
+            <p>Replaced a €60,000 annual outsourced BI model with internal capability that could adapt to changing requirements in real time.</p>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-tag">Operational</div>
+            <p>Reduced dependence on manual reporting cycles. Managers gained on-demand access to performance data across regions and brands.</p>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-tag">Organizational</div>
+            <p>Increased BI adoption among non-technical users who had previously relied exclusively on Excel. Improved data confidence organization-wide.</p>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-tag">Strategic</div>
+            <p>Enabled faster identification of performance risks and opportunities. Improved competitive visibility through Nielsen market intelligence integration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Closing ── -->
+    <div class="closing-wrap reveal">
+      <h2>This wasn't a technology project.</h2>
+      <p>
+        It was a change management project disguised as an analytics project. The work required
+        translating between business language and data language — in both directions. It required
+        building trust faster than skepticism could grow.
+      </p>
+      <p>
+        The real outcome was a Distribution organization that became more confident in its data,
+        more consistent in how it made decisions, and more capable of asking the questions that
+        drive competitive advantage — without waiting days for a report to be built.
+      </p>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer id="contact" class="py-10 border-t border-border mt-4">
+      <div class="flex flex-col sm:flex-row justify-between gap-4">
+        <div>
+          <p class="text-xs tracking-widest uppercase text-faint font-medium mb-1">Portfolio · [Your Name]</p>
+          <p class="text-xs text-faint">Unilever Distribution Intelligence · Apr 2024 – May 2025</p>
+        </div>
+        <div class="flex gap-4 items-start">
+          <a href="mailto:[your.email@example.com]" class="text-xs text-mcblue hover:underline">[your.email@example.com]</a>
+          <a href="https://linkedin.com/in/[yourhandle]" class="text-xs text-mcblue hover:underline">LinkedIn ↗</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // Enable animations only after JS loads
+    document.documentElement.classList.add('js-ready')
+
+    // Progress bar
+    const bar = document.getElementById('progress-bar')
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY
+      const total = document.documentElement.scrollHeight - window.innerHeight
+      bar.style.width = Math.min(100, (scrolled / total) * 100) + '%'
+    })
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal')
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    )
+    reveals.forEach(el => observer.observe(el))
+
+    // Metric counter animation
+    function animateCount(el, target, suffix, decimals) {
+      const duration = 1200
+      const start = performance.now()
+      const update = (now) => {
+        const progress = Math.min((now - start) / duration, 1)
+        const ease = 1 - Math.pow(1 - progress, 3)
+        const val = target * ease
+        el.textContent = (decimals ? val.toFixed(1) : Math.round(val)) + suffix
+        if (progress < 1) requestAnimationFrame(update)
+      }
+      requestAnimationFrame(update)
+    }
+
+    const metricObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const vals = e.target.querySelectorAll('.val')
+          // €60K, 12, 99.9%, 13mo
+          const configs = [
+            { target: 60, suffix: 'K', prefix: '€', decimals: false },
+            { target: 12,  suffix: '',  prefix: '',  decimals: false },
+            { target: 99.9,suffix: '%', prefix: '',  decimals: true  },
+            { target: 13,  suffix: 'mo',prefix: '',  decimals: false },
+          ]
+          vals.forEach((el, i) => {
+            const c = configs[i]
+            const orig = el.textContent
+            setTimeout(() => {
+              if (c.prefix) {
+                animateCountPrefixed(el, c.target, c.suffix, c.prefix, c.decimals)
+              } else {
+                animateCount(el, c.target, c.suffix, c.decimals)
+              }
+            }, i * 120)
+          })
+          metricObserver.unobserve(e.target)
+        }
+      })
+    }, { threshold: 0.5 })
+
+    function animateCountPrefixed(el, target, suffix, prefix, decimals) {
+      const duration = 1200
+      const start = performance.now()
+      const update = (now) => {
+        const progress = Math.min((now - start) / duration, 1)
+        const ease = 1 - Math.pow(1 - progress, 3)
+        const val = target * ease
+        el.textContent = prefix + (decimals ? val.toFixed(1) : Math.round(val)) + suffix
+        if (progress < 1) requestAnimationFrame(update)
+      }
+      requestAnimationFrame(update)
+    }
+
+    const metricRow = document.querySelector('.metric-row')
+    if (metricRow) metricObserver.observe(metricRow)
+  </script>
+</body>
+</html>
