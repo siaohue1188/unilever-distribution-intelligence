@@ -74,6 +74,22 @@
     .hero-meta-item dt { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 2px; }
     .hero-meta-item dd { font-size: 13px; color: var(--ink); font-weight: 500; }
 
+    /* ── Hero split layout ── */
+    .hero-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+    @media (max-width: 680px) { .hero-split { grid-template-columns: 1fr; } .hero-img-wrap { display: none; } }
+    .hero-img-wrap { display: flex; align-items: center; justify-content: center; padding-top: 1rem; }
+    .hero-card-img {
+      width: 100%; max-width: 340px;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.08);
+      transform: rotate(3deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hero-card-img:hover {
+      transform: rotate(1deg) scale(1.02);
+      box-shadow: 0 20px 56px rgba(0,0,0,0.16), 0 4px 12px rgba(0,0,0,0.10);
+    }
+
     /* ── Metrics ── */
     .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 0.5px solid var(--border); border-radius: 8px; overflow: hidden; margin: 3rem 0; }
     @media (max-width: 600px) { .metrics { grid-template-columns: 1fr 1fr; } }
@@ -176,8 +192,7 @@
     <div class="nav-inner">
       <a href="#" class="nav-logo">
         <img src="images/unilever-logo.png" alt="Unilever"
-             onerror="this.style.display='none'; this.nextElementSibling.style.fontWeight='700'; this.nextElementSibling.style.color='#1F35A5';" />
-        <span>Unilever</span>
+             onerror="this.style.display='none';" />
       </a>
       <a href="#" class="nav-back">← Back to portfolio</a>
     </div>
@@ -187,19 +202,26 @@
 
     <!-- ── Hero ── -->
     <div class="wrap">
-      <div class="hero reveal">
-        <div class="hero-label"><span></span> Case Study · Distribution Trade</div>
-        <h1>Automated Sales<br>Reporting <em>System</em></h1>
-        <p class="hero-sub">
-          How I replaced manual Excel reporting with a fully automated Power BI platform
-          that changed the way Unilever's Distribution Trade team interacts with data.
-        </p>
-        <dl class="hero-meta">
-          <div class="hero-meta-item"><dt>Timeline</dt><dd>Apr 2024 – May 2025</dd></div>
-          <div class="hero-meta-item"><dt>Role</dt><dd>Analytics Lead</dd></div>
-          <div class="hero-meta-item"><dt>Team</dt><dd>3 people</dd></div>
-          <div class="hero-meta-item"><dt>Tool</dt><dd>Power BI · DAX · SharePoint</dd></div>
-        </dl>
+      <div class="hero hero-split reveal">
+        <div class="hero-text">
+          <div class="hero-label"><span></span> Case Study · Distribution Trade</div>
+          <h1>Automated Sales<br>Reporting <em>System</em></h1>
+          <p class="hero-sub">
+            How I replaced manual Excel reporting with a fully automated Power BI platform
+            that changed the way Unilever's Distribution Trade team interacts with data.
+          </p>
+          <dl class="hero-meta">
+            <div class="hero-meta-item"><dt>Timeline</dt><dd>Apr 2024 – May 2025</dd></div>
+            <div class="hero-meta-item"><dt>Role</dt><dd>Analytics Lead</dd></div>
+            <div class="hero-meta-item"><dt>Team</dt><dd>3 people</dd></div>
+            <div class="hero-meta-item"><dt>Tool</dt><dd>Power BI · DAX · SharePoint</dd></div>
+          </dl>
+        </div>
+        <div class="hero-img-wrap">
+          <img src="images/dashboard-card.png" alt="FMCG Power BI Dashboard"
+               class="hero-card-img"
+               onerror="this.style.display='none'" />
+        </div>
       </div>
     </div>
 
@@ -543,7 +565,7 @@
     <!-- ── Footer ── -->
     <div class="wrap">
       <footer>
-        <p>[Your Name] · Unilever Distribution Trade · Apr 2024 – May 2025 · <a href="mailto:[your@email.com]" style="color:var(--ublue);">[your@email.com]</a></p>
+        <p>Rozanne Tang Siao Hue · Unilever Distribution Trade · Apr 2024 – May 2025 · <a href="mailto:rozannetang@gmail.com" style="color:var(--ublue);">rozannetang@gmail.com</a></p>
       </footer>
     </div>
 
