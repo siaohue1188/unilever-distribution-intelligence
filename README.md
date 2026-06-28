@@ -1,19 +1,48 @@
-# Unilever Distribution Intelligence Platform — Portfolio Case Study
+# Unilever Distribution Intelligence Platform
 
-A McKinsey-style portfolio case study documenting a 13-month business transformation initiative at Unilever's Distribution organization.
+**Live site:** https://siaohue1188.github.io/unilever-distribution-intelligence/
 
-**Live site:** [your-username.github.io/unilever-distribution-intelligence](https://your-username.github.io/unilever-distribution-intelligence)
+This project is a personal documentation of one of the most meaningful experiences in my early career.
 
-## About
+Over the course of 13 months at Unilever, I worked on building an internal sales reporting system for the Distribution Trade team using Power BI. What started as a simple idea — making reporting faster and easier — gradually evolved into a much larger journey involving stakeholder conversations, technical learning, experimentation, feedback, and continuous iteration.
 
-This case study covers how internal analytics capabilities replaced a €60,000 outsourced BI model, delivered 12 operational dashboards, and changed the decision-making culture of Unilever's Distribution team.
+This portfolio is not meant to showcase the dashboards themselves.
 
-## Deploy
+Instead, it focuses on the process behind the work.
 
-No build step required. The site is a single `index.html` with all dependencies loaded from CDN.
+It captures how the project was initiated, how requirements evolved over time, the challenges we encountered, the people involved, the tools we used, and the lessons I learned throughout the journey.
 
-To host on GitHub Pages:
-1. Push this repository to GitHub
-2. Go to **Settings → Pages**
-3. Set source to **Deploy from a branch → main → / (root)**
-4. Your site will be live at `https://your-username.github.io/your-repo-name`
+Inside this documentation, you'll find:
+
+- The business context behind the project
+- The timeline of how the system evolved over 13 months
+- My workflow as a Data Analyst, from requirement gathering to delivery
+- The technical tools used throughout the project
+- Stakeholder collaboration and feedback loops
+- Challenges related to both technology and user adoption
+- Reflections and key learnings from the experience
+
+More than a technical project, this experience taught me that successful data products are built around people.
+
+Understanding how people work, make decisions, and adapt to change was just as important as building the dashboard itself.
+
+This portfolio is my attempt to document that journey.
+
+---
+
+## Tech Stack
+
+- Power BI
+- Power Query
+- DAX
+- Power Automate
+- Microsoft SharePoint
+- Excel
+
+---
+
+## About This Portfolio
+
+This website is designed as a narrative case study rather than a traditional project showcase.
+
+The intention is to provide a transparent view into my way of thinking, problem-solving approach, and experience working in a real business environment.
